@@ -1,0 +1,20 @@
+[
+    {
+        "model": "raterprojectapi.rating",
+        "pk": 1,
+        "fields": {
+            "rating": 4,
+            "game_id": 1,
+            "player_id": 1
+        }
+    },
+    {
+        "model": "raterprojectapi.rating",
+        "pk": 2,
+        "fields": {
+            "rating": 5,
+            "game_id": 2,
+            "player_id": 1
+        }
+    }
+]

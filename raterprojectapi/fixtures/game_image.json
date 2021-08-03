@@ -1,0 +1,20 @@
+[
+    {
+        "model": "raterprojectapi.gameimage",
+        "pk": 1,
+        "fields": {
+            "image": "https://m.media-amazon.com/images/I/91YNJM4oyhL._AC_SX679_.jpg",
+            "game_id": 1,
+            "player_id": 1
+        }
+    },
+    {
+        "model": "raterprojectapi.gameimage",
+        "pk": 2,
+        "fields": {
+            "image": "https://i5.walmartimages.com/asr/56d38936-8c96-4a7f-9725-4439f2abc5a3_1.b584f3c52295ea0456b63ab3b5d9de22.jpeg",
+            "game_id": 2,
+            "player_id": 1
+        }
+    }
+]

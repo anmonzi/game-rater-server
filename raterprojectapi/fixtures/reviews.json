@@ -1,0 +1,20 @@
+[
+    {
+        "model": "raterprojectapi.review",
+        "pk": 1,
+        "fields": {
+            "review": "I love the strategy that's need to play Ticket to Ride. Such a fun game.",
+            "game_id": 1,
+            "player_id": 1
+        }
+    },
+    {
+        "model": "raterprojectapi.review",
+        "pk": 2,
+        "fields": {
+            "review": "What's not to love about Yahtzee? It's all luck... YAHTZEE!",
+            "game_id": 2,
+            "player_id": 1
+        }
+    }
+]

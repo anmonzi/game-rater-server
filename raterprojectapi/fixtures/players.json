@@ -1,0 +1,10 @@
+[
+    {
+        "model": "raterprojectapi.player",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "I'm an avid gamer and love energy drinks."
+        }
+    }
+]
