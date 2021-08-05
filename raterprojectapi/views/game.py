@@ -76,6 +76,26 @@ class GameView(ViewSet):
         return Response(serializer.data)
 
 
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for single game
+
+        Returns:
+            Response -- JSON serialized game instance
+        """
+        try:
+            # `pk` is a parameter to this function, and
+            # Django parses it from the URL route parameter
+            #   http://localhost:8000/games/2
+            #
+            # The `2` at the end of the route becomes `pk`
+            game = Game.objects.get(pk=pk)
+            serializer = GameSerializer(game, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
+
+
+
 
 class GameSerializer(serializers.ModelSerializer):
     """JSON serializer for games
@@ -83,7 +103,5 @@ class GameSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Game
-        fields = ('id', 'title', 'description', 'designer',
-                    'year_released', 'number_of_players',
-                    'game_time', 'age_rec', 'player')
+        fields = '__all__'
         depth = 1
