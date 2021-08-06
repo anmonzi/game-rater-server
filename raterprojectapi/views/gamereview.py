@@ -56,13 +56,22 @@ class ReviewView(ViewSet):
         """
         # Get all game records from the database
         reviews = Review.objects.all()
-        # Support filtering games by type
-        #    http://localhost:8000/games?type=1
+        # Support filtering reviews by gameId
+        #    http://localhost:8000/reviews?game=1
         #
-        # That URL will retrieve all tabletop games
-        # game_type = self.request.query_params.get('type', None)
-        # if game_type is not None:
-        #     games = games.filter(game_type__id=game_type)
+        # That URL will retrieve all reviews from game 1
+        game = self.request.query_params.get('game', None)
+        if game is not None:
+            reviews = Review.objects.filter(game__id=game)
+        # alternative ORM method
+        # game = self.request.query_params.get('game', None)
+
+        # if game:
+        #     reviews = Review.objects.filter(game=game)
+        # else:
+        #     reviews = Review.objects.all()
+
+
         serializer = ReviewSerializer(reviews, many=True, context={'request': request})
         return Response(serializer.data)
 
