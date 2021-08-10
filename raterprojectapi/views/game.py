@@ -6,6 +6,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from raterprojectapi.models import Game, GameCategory, Player, Category
+from django.contrib.auth.models import User
 
 
 
@@ -99,13 +100,60 @@ class GameView(ViewSet):
             return HttpResponseServerError(ex)
 
 
+    def update(self, request, pk=None):
+        """Handle PUT requests for a game
 
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        player = Player.objects.get(user=request.auth.user)
+
+        # Do mostly the same thing as POST, but instead of
+        # creating a new instance of Game, get the game record
+        # from the database whose primary key is `pk`
+        game = Game.objects.get(pk=pk)
+        game.title = request.data["title"]
+        game.description = request.data["description"]
+        game.designer = request.data["designer"]
+        game.year_released = request.data["year_released"]
+        game.number_of_players = request.data["number_of_players"]
+        game.game_time = request.data["game_time"]
+        game.age_rec = request.data["age_rec"]
+        game.player = player
+
+        try:
+            game.save()
+            game.categories.set(request.data["categories"])
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+        except ValidationError as ex:
+            return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 204 status code means everything worked but the
+        # server is not sending back any data in the response
+
+class UserSerializer(serializers.ModelSerializer):
+    """JSON serializer for event organizer's related Django user"""
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class PlayerSerializer(serializers.ModelSerializer):
+    """JSON serializer for event organizer"""
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = Player
+        fields = ['user']
 
 class GameSerializer(serializers.ModelSerializer):
     """JSON serializer for games
     Arguments: serializer type
     """
+    player = PlayerSerializer(many=False)
+
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ('id', 'title', 'description', 'designer',
+        'year_released', 'number_of_players', 'game_time', 'age_rec', 'categories', 'player', 'average_rating')
         depth = 1

@@ -16,5 +16,23 @@
             "game_id": 2,
             "player_id": 1
         }
+    },
+    {
+        "model": "raterprojectapi.rating",
+        "pk": 3,
+        "fields": {
+            "rating": 9,
+            "game_id": 1,
+            "player_id": 1
+        }
+    },
+    {
+        "model": "raterprojectapi.rating",
+        "pk": 4,
+        "fields": {
+            "rating": 9,
+            "game_id": 2,
+            "player_id": 1
+        }
     }
 ]
